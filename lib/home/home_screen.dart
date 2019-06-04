@@ -31,6 +31,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
  List<NavigationIconView> _navigationViews;
  int _currentIndex = 0;
+ PageController _pageController;
+ List<Widget> _pages;
   @override
   void initState() { 
     super.initState();
@@ -55,6 +57,13 @@ class _HomeScreenState extends State<HomeScreen> {
         icon: AppIconFont().buidIconData(0xe6c0),
         activeIcon: AppIconFont().buidIconData(0xe626)
       )
+    ];
+    _pageController = PageController(initialPage: _currentIndex);
+    _pages = [
+      Container(color: Colors.red),
+      Container(color: Colors.black),
+      Container(color: Colors.blue),
+      Container(color: Colors.green)
     ];
   }
 
@@ -82,6 +91,10 @@ class _HomeScreenState extends State<HomeScreen> {
       onTap: (int index){
         setState(() {
          _currentIndex = index; 
+         _pageController.animateToPage(
+           _currentIndex,
+           duration: Duration(microseconds: 200),
+           curve: Curves.easeInOut);
         });
       },
     );
@@ -91,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('微信'),
-        elevation: 0.0,
+        elevation: 0.0,      
         actions: <Widget>[
           IconButton(
             icon: AppIconFont().buidIconFont(0xe65e),
@@ -133,8 +146,17 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(width: 16)
         ],
       ),
-      body: Container(
-
+      body: PageView.builder(
+        itemBuilder: (BuildContext context,int index){
+          return _pages[index];
+        },
+        controller: _pageController,
+        itemCount: _pages.length,
+        onPageChanged: (int index){
+          setState(() {
+           _currentIndex = index;
+          });
+        },
       ),
       bottomNavigationBar: botNavBar,
     );
