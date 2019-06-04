@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
   _buildPopupMenuItem(int iconName,String title){
     return Row(
       children: <Widget>[
-        Icon(AppIconFont().buidIconData(iconName),size: 22,color: Colors.white,),
+        Icon(AppIconFont().buidIconData(iconName),size: 22,color: Colors.white),
         Container(width: 16),
         Text(title,style: TextStyle(color:Colors.white))
       ],
